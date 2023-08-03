@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { CardCreator } from './components/CardCreator';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [cardsItems, setCardsItems] = useState('');
+
+	useEffect(() => {
+		const card = localStorage.getItem('card');
+		if (card) {
+			setCardsItems(JSON.parse(card));
+		}
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem('card', JSON.stringify(cardsItems));
+	}, [cardsItems]);
+
+	return (
+		<div className="App">
+			<h2>Hola programador</h2>
+			<CardCreator />
+		</div>
+	);
 }
 
 export default App;
